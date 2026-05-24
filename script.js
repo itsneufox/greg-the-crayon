@@ -18,6 +18,20 @@ const relic = document.querySelector(".greg-relic");
 const marks = document.querySelectorAll(".mark");
 const returnLink = document.querySelector("[data-return-link]");
 const conversionRite = document.querySelector("[data-conversion-rite]");
+const menuChecks = document.querySelectorAll(".menu-check");
+
+menuChecks.forEach(check => {
+  const menu = check.closest(".site-menu");
+  if (!menu) {
+    return;
+  }
+
+  menu.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      check.checked = false;
+    });
+  });
+});
 
 if (returnLink) {
   const params = new URLSearchParams(window.location.search);
