@@ -81,6 +81,10 @@ nav a {
   position: absolute;
   width: 1px;
   height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
   opacity: 0;
   pointer-events: none;
 }
@@ -1090,33 +1094,56 @@ footer p {
   }
 
   .menu-toggle {
-    display: inline-flex;
-    align-items: center;
-    min-height: 42px;
-    border: 1px solid rgba(96, 62, 31, .36);
-    padding: 0 14px;
-    background: #fffaf2;
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    min-height: 48px;
+    border: 0;
+    padding: 0;
+    overflow: visible;
+    background: transparent;
     color: var(--ink);
-    font-size: .72rem;
-    font-weight: 900;
-    letter-spacing: .08em;
-    text-transform: uppercase;
+    font-size: 0;
     cursor: pointer;
+  }
+
+  .menu-toggle::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 18px;
+    height: 2px;
+    background: currentColor;
+    box-shadow: 0 -7px 0 currentColor, 0 7px 0 currentColor;
+    transform: translate(-50%, -50%);
+    transform-origin: center;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+
+  .menu-check:checked + .menu-toggle::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+    box-shadow: 0 0 0 currentColor, 0 0 0 currentColor;
   }
 
   .menu-toggle::after {
     content: "";
-    width: 7px;
-    height: 7px;
-    margin-left: 10px;
-    border-right: 2px solid currentColor;
-    border-bottom: 2px solid currentColor;
-    transform: translateY(-2px) rotate(45deg);
-    transition: transform .2s ease;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 18px;
+    height: 2px;
+    background: currentColor;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transform-origin: center;
+    transition: opacity .2s ease, transform .2s ease;
   }
 
   .menu-check:checked + .menu-toggle::after {
-    transform: translateY(2px) rotate(225deg);
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(-45deg);
   }
 
   .site-nav {
@@ -1286,8 +1313,8 @@ footer p {
   }
 
   .menu-toggle {
-    min-height: 40px;
-    padding: 0 12px;
+    width: 46px;
+    min-height: 46px;
   }
 
   h1 {
